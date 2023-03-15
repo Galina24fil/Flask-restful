@@ -59,24 +59,24 @@ class UsersListResource(Resource):
         parser.add_argument("password", type=str)
         args = parser.parse_args()
         session = db_session.create_session()
-        s = session.query(User).filter(User.id == args["id"]).first()
-        if not s:
-            if args["id"] and args["surname"] and args["name"] and args["age"] and args["position"] and args[
-                "speciality"] and args["address"] and args["email"] and args["password"]:
-                users = User()
-                users.id = args["id"]
-                users.surname = args["surname"]
-                users.name = args["name"]
-                users.age = args["age"]
-                users.position = args["position"]
-                users.speciality = args["speciality"]
-                users.address = args["address"]
-                users.email = args["email"]
-                users.password_hash = generate_password_hash(args["password"])
-                session.add(users)
-                session.commit()
-                return jsonify({'success': 'OK'})
-            else:
-                return jsonify({'error': 'Not all arguments'})
+        if args["id"]:
+            s = session.query(User).filter(User.id == args["id"]).first()
+            if s:
+                return jsonify({'error': 'ID already exists'})
+
+        if args["surname"] and args["name"] and args["age"] and args["position"] and args[
+            "speciality"] and args["address"] and args["email"] and args["password"]:
+            users = User()
+            users.surname = args["surname"]
+            users.name = args["name"]
+            users.age = args["age"]
+            users.position = args["position"]
+            users.speciality = args["speciality"]
+            users.address = args["address"]
+            users.email = args["email"]
+            users.password_hash = generate_password_hash(args["password"])
+            session.add(users)
+            session.commit()
+            return jsonify({'success': 'OK'})
         else:
-            return jsonify({'error': 'ID already exists'})
+            return jsonify({'error': 'Not all arguments'})
