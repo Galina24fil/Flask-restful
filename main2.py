@@ -13,7 +13,7 @@ def main():
     api.add_resource(users_resources.UsersListResource, '/api/v2/users')
 
     # для одного объекта
-    api.add_resource(users_resources.UsersResource, '/api/v2/users/<int:users_id>')
+    api.add_resource(users_resources.UsersResource, '/api/v2/users/<users_id>')
     app.run()
 
 
