@@ -9,12 +9,12 @@ print(get('http://localhost:5000/api/v2/users/q').json()) # id не инт
 print(get('http://localhost:5000/api/v2/users').json())
 print(delete("http://localhost:5000/api/v2/users/25").json()) #удаление
 print(post("http://localhost:5000/api/v2/users",
-           json={"surname": "Фамилия", "name": "name",
+           json={"id": 25, "surname": "Фамилия", "name": "name",
             "age": 2, "position": "position", "speciality": "speciality",
             "address": "address", "email": "email25@email",
             "password": "Qazqwer25"}).json())
 
-print(get('http://localhost:5000/api/v2/users').json()) # добавился
+print(get('http://localhost:5000/api/v2/users/25').json()) # 25 id добавился
 
 print(post("http://localhost:5000/api/v2/users",
            json={"surname": "Фамилия"}).json()) # недостаточно данных

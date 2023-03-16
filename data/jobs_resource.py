@@ -43,12 +43,10 @@ class JobsListResource(Resource):
         news = session.query(Jobs).all()
         return jsonify({'Jobs': [item.to_dict(
             only=('id', 'team_leader', 'job', 'work_size', 'collaborators', 'start_date', 'end_date', 'is_finished'))
-            for
-            item in news]})
+            for item in news]})
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("id", type=int)
         parser.add_argument("team_leader", type=int)
         parser.add_argument("job", type=str)
         parser.add_argument("work_size", type=int)
@@ -56,21 +54,15 @@ class JobsListResource(Resource):
         parser.add_argument("is_finished", type=bool)
         args = parser.parse_args()
         session = db_session.create_session()
-        s = session.query(Jobs).filter(Jobs.id == args["id"]).first()
-        if not s:
-            if args["id"] and args["team_leader"] and args["job"] and args["work_size"] and args["collaborators"] and \
-                    args["is_finished"]:
-                jobs = Jobs()
-                jobs.id = args["id"]
-                jobs.surname = args["team_leader"]
-                jobs.name = args["job"]
-                jobs.age = args["work_size"]
-                jobs.position = args["collaborators"]
-                jobs.speciality = args["is_finished"]
-                session.add(jobs)
-                session.commit()
-                return jsonify({'success': 'OK'})
-            else:
-                return jsonify({'error': 'Not all arguments'})
+        if args["team_leader"] and args["job"] and args["work_size"] and args["collaborators"]:
+            jobs = Jobs()
+            jobs.team_leader = args["team_leader"]
+            jobs.job = args["job"]
+            jobs.work_size = args["work_size"]
+            jobs.collaborators = args["collaborators"]
+            jobs.is_finished = args["is_finished"]
+            session.add(jobs)
+            session.commit()
+            return jsonify({'success': 'OK'})
         else:
-            return jsonify({'error': 'ID already exists'})
+            return jsonify({'error': 'Not all arguments'})
