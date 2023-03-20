@@ -48,7 +48,6 @@ class UsersListResource(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument("id", type=int)
         parser.add_argument("surname", type=str)
         parser.add_argument("name", type=str)
         parser.add_argument("age", type=int)
@@ -59,11 +58,6 @@ class UsersListResource(Resource):
         parser.add_argument("password", type=str)
         args = parser.parse_args()
         session = db_session.create_session()
-        if args["id"]:
-            s = session.query(User).filter(User.id == args["id"]).first()
-            if s:
-                return jsonify({'error': 'ID already exists'})
-
         if args["surname"] and args["name"] and args["age"] and args["position"] and args[
             "speciality"] and args["address"] and args["email"] and args["password"]:
             users = User()
