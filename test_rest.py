@@ -11,8 +11,8 @@ print(delete("http://localhost:5000/api/v2/users/25").json()) #удаление
 print(post("http://localhost:5000/api/v2/users",
            json={"surname": "Фамилия", "name": "name",
             "age": 2, "position": "position", "speciality": "speciality",
-            "address": "address", "email": "email25@email",
-            "password": "Qazqwer25"}).json())
+            "address": "address", "email": "email27@email",
+            "password": "Qazqwer27"}).json())
 
 print(get('http://localhost:5000/api/v2/users').json()) # id добавился
 
