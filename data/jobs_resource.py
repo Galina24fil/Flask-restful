@@ -1,7 +1,7 @@
 from flask_restful import reqparse, abort, Api, Resource
 from flask import Flask, request, jsonify
 from .jobs import Jobs
-from data import db_session
+from . import db_session
 
 
 def abort_if_jobs_not_found(jobs_id):
